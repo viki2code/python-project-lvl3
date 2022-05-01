@@ -7,11 +7,10 @@ def get_file_name(url):
     url_parse = urlparse(url)
     pattern_for_change = r'\W|\_'
     path_split = os.path.splitext(url_parse.path)
-    ext = '.html' if path_split[0] == '' else path_split[1]
+    ext = '.html' if path_split[1] == '' else path_split[1]
     result = re.sub(pattern_for_change, '-',
                     url_parse.netloc +
-                    path_split[0]) + \
-             ext
+                    path_split[0]) + ext
     return result
 
 

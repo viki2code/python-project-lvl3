@@ -5,7 +5,7 @@ from page_loader.src_loader import obj_download
 from bs4 import BeautifulSoup
 
 
-TAG = ['img', 'script']
+TAG = ['img', 'script', 'link']
 
 def download(url, path):
     file_name = get_file_name(url)

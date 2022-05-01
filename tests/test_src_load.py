@@ -10,6 +10,8 @@ IMG_URL = 'https://ru.hexlet.io/assets/professions/nodejs.png'
 IMG_FILE_NAME = 'ru-hexlet-io-courses_files/ru-hexlet-io-assets-professions-nodejs.png'
 SCRIPT_URL = 'https://ru.hexlet.io/packs/js/runtime.js'
 SCRIPT_FILE_NAME = 'ru-hexlet-io-courses_files/ru-hexlet-io-packs-js-runtime.js'
+LINK_URL = 'https://ru.hexlet.io/assets/application.css'
+LINK_FILE_NAME = 'ru-hexlet-io-courses_files/ru-hexlet-io-assets-application.css'
 
 
 
@@ -26,6 +28,7 @@ def get_path(file_name, folder_name):
 FILE_SITE = get_path('web_site.html', MOCK_FOLDER)
 FILE_IMG = get_path('nodejs.png', MOCK_FOLDER)
 FILE_SCRIPT = get_path('runtime.js', MOCK_FOLDER)
+FILE_LINK = get_path('application.css', MOCK_FOLDER)
 FILE_DOWNLOAD = get_path('downloaded_web_site.html', FIXTURES_FOLDER)
 
 
@@ -34,7 +37,9 @@ def test_src_replace(received, expected, tmpdir, requests_mock):
     text = read_file(FILE_SITE)
     img_content = read_file(FILE_IMG, 'rb')
     script_content = read_file(FILE_SCRIPT, 'rb')
+    link_content = read_file(FILE_LINK, 'rb')
     requests_mock.get(URL, text=text)
     requests_mock.get(IMG_URL, content=img_content)
     requests_mock.get(SCRIPT_URL, content=script_content)
+    requests_mock.get(LINK_URL, content=link_content)
     assert read_file(download(URL, tmpdir)) == read_file(FILE_DOWNLOAD)
