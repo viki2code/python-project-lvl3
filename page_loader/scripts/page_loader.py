@@ -2,7 +2,14 @@ import argparse
 from page_loader.page_loader import download
 import os
 
-
+'''sage: page-loader [options] <url>                                                                                                                                                       
+                                                                                                                                                                                         
+some description                                                                                                                                                                         
+                                                                                                                                                                                         
+Options:                                                                                                                                                                                 
+  -V, --version      output the version number                                                                                                                                           
+  -o --output [dir]  output dir (default: "/app")                                                                                                                                        
+  -h, --help         display help for command   '''
 def main():
     parser = argparse.ArgumentParser(
         description='Usage: page-loader [options] <url>')
