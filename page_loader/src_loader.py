@@ -18,7 +18,7 @@ def obj_download(elements, path, folder_name, url):
                 os.mkdir(new_folder_path)
             file_name = get_file_name(absolute_url)
             new_link = os.path.join(folder_name, file_name)
-            write_content(absolute_url, os.path.join(path, folder_name), 
+            write_content(absolute_url, os.path.join(path, folder_name),
                           file_name)
             logger.debug(f'Loaded {absolute_url} path file {new_link}')
             element[attribute] = new_link

@@ -22,5 +22,8 @@ test-coverage:
 selfcheck:
 	poetry check
 
+build: check
+	poetry build
+
 check: selfcheck test lint
 
