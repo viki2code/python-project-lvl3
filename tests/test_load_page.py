@@ -3,6 +3,7 @@ import pytest
 from page_loader.page_loader import download
 from page_loader.url import get_file_name
 
+STATUS_CODE = [404, 500]
 FIXTURES_FOLDER = 'fixtures'
 MOCK_FOLDER = 'fixtures/mocks'
 URL = 'https://ru.hexlet.io/courses'
@@ -59,3 +60,16 @@ def test_src_replace(tmpdir, requests_mock):
     requests_mock.get(SCRIPT_URL, content=script_content, headers=headers_script)
     requests_mock.get(LINK_URL, content=link_content, headers=headers_link)
     assert read_file(download(URL, tmpdir)) == read_file(FILE_DOWNLOAD)
+
+
+@pytest.mark.parametrize('code', STATUS_CODE)
+def test_response_error_code(requests_mock, code, tmp_path):
+    requests_mock.get(URL, status_code=code)
+    with pytest.raises(Exception):
+        assert download(URL, tmp_path)
+
+
+def test_write_content(requests_mock):
+    requests_mock.get(URL, text='data')
+    with pytest.raises(Exception):
+        assert download(URL, 'tmp_path')

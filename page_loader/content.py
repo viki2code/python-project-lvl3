@@ -39,6 +39,7 @@ def get_request(url):
 
 
 def write_content(url, path, file_name):
+    chunk_size = 1024
     r = get_request(url)
     content_length = int(r.headers['Content-Length'])
     bar = IncrementalBar(f'{file_name}',
@@ -48,9 +49,9 @@ def write_content(url, path, file_name):
 
     try:
         with open(os.path.join(path, file_name), 'wb') as opened_file:
-            for chunk in r.iter_content(chunk_size=1024):
+            for chunk in r.iter_content(chunk_size=chunk_size):
                 opened_file.write(chunk)
-                bar.next(1024)
+                bar.next(chunk_size)
             bar.finish()
     except PermissionError as permission:
         logger.error(f'Access denied to file {file_name}')

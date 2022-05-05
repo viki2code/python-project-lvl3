@@ -11,8 +11,7 @@ def main():
         help=f'output dir (default: "{os.getcwd()}")'
     )
     args = parser.parse_args()
-    file = download(args.url, args.output)
-    print(f'Page was successfully downloaded into "{file}"')
+    download(args.url, args.output)
 
 
 if __name__ == '__main__':
