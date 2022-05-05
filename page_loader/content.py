@@ -41,7 +41,9 @@ def get_request(url):
 def write_content(url, path, file_name):
     r = get_request(url)
     content_length = int(r.headers['Content-Length'])
-    bar = IncrementalBar(f'{file_name}', max=content_length, suffix='%(percent)d%%')
+    bar = IncrementalBar(f'{file_name}',
+                         max=content_length,
+                         suffix='%(percent)d%%')
     logger = get_logger(__name__)
 
     try:

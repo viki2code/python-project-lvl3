@@ -3,8 +3,6 @@ import argparse
 from page_loader.page_loader import download
 
 
-
-
 def main():
     parser = argparse.ArgumentParser('Page loader')
     parser.add_argument('url', type=str)
