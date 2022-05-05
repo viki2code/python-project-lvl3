@@ -5,37 +5,41 @@ from page_loader.url import get_file_name, \
 from page_loader.content import write_content
 
 
-def resource_download(elements, path, folder_name, url):
-    new_folder_path = os.path.join(path, folder_name)
+def update_link(elements, path, folder_name, url):
     logger = get_logger(__name__)
-    logger.debug('Start to load resources:')
-    data_to_load =[]
+    logger.debug('Start to update link:')
+    data_to_load = []
     for element in elements:
         attribute = 'src' if element.get('src') is not None else 'href'
         link = element[attribute]
         if is_same_host(get_host(url), link):
-            property_resource ={'absolute_url':
-                                    get_absolute_url(get_main_page_url(url), link),
-                                'folder_path':
-                                    os.path.join(path, folder_name),
-                                'file_name': file_name
-                                }
-            if not os.path.isdir(new_folder_path):
-                os.mkdir(new_folder_path)
+            absolute_url = get_absolute_url(get_main_page_url(url), link)
             file_name = get_file_name(absolute_url)
             new_link = os.path.join(folder_name, file_name)
-            write_content(absolute_url, os.path.join(path, folder_name),
-                          file_name)
-            logger.debug(f'Loaded {absolute_url} - path file {new_link}')
-            element[attribute] = new_link
+            property_resource = {'absolute_url': absolute_url,
+                                 'folder_path':
+                                     os.path.join(path, folder_name),
+                                 'file_name': file_name
+                                 }
+
             data_to_load.append(property_resource)
-    logger.debug('All resources loaded')
+            logger.debug(f'Update: {element[attribute]} ---> {new_link}')
+            element[attribute] = new_link
+    return data_to_load
 
 
-if not os.path.isdir(new_folder_path):
-    os.mkdir(new_folder_path)
-file_name = get_file_name(absolute_url)
-new_link = os.path.join(folder_name, file_name)
-write_content(absolute_url, os.path.join(path, folder_name),
-              file_name)
-logger.debug(f'Loaded {absolute_url} - path file {new_link}')
+def download_resource(folder_path, data_to_load):
+    logger = get_logger(__name__)
+    if data_to_load is not None:
+        try:
+            if not os.path.isdir(folder_path):
+                os.mkdir(folder_path)
+        except OSError as err:
+            logger.error(f'Unable make dir {folder_path}')
+            raise err
+    for element in data_to_load:
+        write_content(element['absolute_url'],
+                      element['folder_path'],
+                      element['file_name'])
+        logger.debug(f'Loaded page {element["absolute_url"]} into '
+                     f'{element["file_name"]}')
