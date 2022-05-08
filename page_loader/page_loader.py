@@ -4,11 +4,12 @@ from page_loader.url import get_file_name, get_folder
 from page_loader.resource_loader import update_link, download_resource
 from bs4 import BeautifulSoup
 from page_loader.app_logger import get_logger
+
 TAG = ['img', 'script', 'link']
+logger = get_logger(__name__)
 
 
 def download(url, path):
-    logger = get_logger(__name__)
     logger.debug(f'Download page: "{url}" into dir: "{path}"')
     file_name = get_file_name(url)
     folder_for_resource = get_folder(file_name)
@@ -21,4 +22,5 @@ def download(url, path):
                       data_to_load)
     write_file(file, soup.prettify())
     logger.debug(f'Page was successfully downloaded into "{file}"')
+    print(f'Page was successfully downloaded into "{file}"')
     return file

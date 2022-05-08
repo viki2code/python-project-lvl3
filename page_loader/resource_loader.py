@@ -4,9 +4,10 @@ from page_loader.url import get_file_name, \
     is_same_host, get_absolute_url, get_host, get_main_page_url
 from page_loader.content import write_content
 
+logger = get_logger(__name__)
+
 
 def update_link(elements, path, folder_name, url):
-    logger = get_logger(__name__)
     logger.debug('Start to update link:')
     data_to_load = []
     for element in elements:
@@ -29,7 +30,6 @@ def update_link(elements, path, folder_name, url):
 
 
 def download_resource(folder_path, data_to_load):
-    logger = get_logger(__name__)
     if data_to_load is not None:
         try:
             if not os.path.isdir(folder_path):

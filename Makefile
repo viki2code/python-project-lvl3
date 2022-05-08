@@ -24,6 +24,6 @@ selfcheck:
 
 build: check
 	poetry build
+page_loader --output /Users/viki/hexlet_projects/load_page  https://page-loader.hexlet.repl.co
 
 check: selfcheck test lint
-

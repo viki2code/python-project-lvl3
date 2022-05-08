@@ -1,7 +1,9 @@
 import os
 import pytest
+import stat
 from page_loader.page_loader import download
 from page_loader.url import get_file_name
+from page_loader.content import write_file
 
 STATUS_CODE = [404, 500]
 FIXTURES_FOLDER = 'fixtures'

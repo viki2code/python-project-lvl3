@@ -1,12 +1,16 @@
-import requests
 import os
-from page_loader.app_logger import get_logger
+
+import requests
 from progress.bar import IncrementalBar
+
+from page_loader.app_logger import get_logger
+
+logger = get_logger(__name__)
 
 
 def write_file(file, data):
     mode = 'wb' if isinstance(data, bytes) else 'w'
-    logger = get_logger(__name__)
+
     try:
         with open(file, mode) as opened_file:
             opened_file.write(data)
@@ -22,7 +26,6 @@ def write_file(file, data):
 
 
 def get_request(url):
-    logger = get_logger(__name__)
     try:
         r = requests.get(url, allow_redirects=True)
         r.raise_for_status()
@@ -45,7 +48,6 @@ def write_content(url, path, file_name):
     bar = IncrementalBar(f'{file_name}',
                          max=content_length,
                          suffix='%(percent)d%%')
-    logger = get_logger(__name__)
 
     try:
         with open(os.path.join(path, file_name), 'wb') as opened_file:
