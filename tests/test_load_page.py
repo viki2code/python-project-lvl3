@@ -78,7 +78,7 @@ def test_write_content(requests_mock):
         assert download(URL, 'tmp_path')
 
 
-def test_exception_load(requests_mock,tmpdir):
+def test_exception_load(requests_mock, tmpdir):
     requests_mock.get(IMG_URL, text='data')
     with pytest.raises(Exception):
-        assert download(IMG_URL, tmpdir)==1
+        assert download(IMG_URL, tmpdir) == 1
