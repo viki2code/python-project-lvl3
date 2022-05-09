@@ -22,5 +22,4 @@ def download(url, path):
                       data_to_load)
     write_file(file, soup.prettify())
     logger.debug(f'Page was successfully downloaded into "{file}"')
-    print(f'Page was successfully downloaded into "{file}"')
     return file
