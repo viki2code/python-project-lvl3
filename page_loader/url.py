@@ -35,3 +35,7 @@ def get_host(url):
 
 def is_same_host(resource_host, url):
     return resource_host == get_host(url) or get_host(url) == ''
+
+
+def is_web_site(file_name):
+    return True if os.path.splitext(file_name)[1] == '.html' else False
