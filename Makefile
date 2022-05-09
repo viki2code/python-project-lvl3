@@ -5,10 +5,13 @@ build:
 	poetry build
 
 package-install:
-	pip install --user dist/*.whl --force-reinstall
+	python3 -m pip install --user dist/*.whl --force-reinstall
 
 page_loader:
 	poetry run page_loader
+
+publish:
+	poetry publish --dry-run
 
 test:
 	poetry run pytest -vv

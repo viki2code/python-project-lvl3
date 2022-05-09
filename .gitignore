@@ -6,4 +6,4 @@ __pycache__
 .coverage
 /.pytest_cache/
 coverage.xml
-page_loader.log
+*.log
