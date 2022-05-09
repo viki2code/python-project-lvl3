@@ -1,9 +1,9 @@
 import os
+
 import pytest
-import stat
+
 from page_loader.page_loader import download
 from page_loader.url import get_file_name
-from page_loader.content import write_file
 
 STATUS_CODE = [404, 500]
 FIXTURES_FOLDER = 'fixtures'
@@ -50,17 +50,18 @@ def test_path_file(requests_mock, tmpdir):
 
 def test_src_replace(tmpdir, requests_mock):
     content = read_file(FILE_SITE, 'rb')
-    headers_html = {'content-length': str(len(content))}
+    # headers_html = {'content-length': str(len(content))}
     img_content = read_file(FILE_IMG, 'rb')
-    headers_img = {'content-length': str(len(img_content))}
+    # headers_img = {'content-length': str(len(img_content))}
     script_content = read_file(FILE_SCRIPT, 'rb')
-    headers_script = {'content-length': str(len(script_content))}
+    # headers_script = {'content-length': str(len(script_content))}
     link_content = read_file(FILE_LINK, 'rb')
-    headers_link = {'content-length': str(len(link_content))}
-    requests_mock.get(URL, content=content, headers=headers_html)
-    requests_mock.get(IMG_URL, content=img_content, headers=headers_img)
-    requests_mock.get(SCRIPT_URL, content=script_content, headers=headers_script)
-    requests_mock.get(LINK_URL, content=link_content, headers=headers_link)
+    # headers_link = {'content-length': str(len(link_content))}
+    # requests_mock.get(URL, content=content, headers=headers_html)
+    requests_mock.get(URL, content=content)
+    requests_mock.get(IMG_URL, content=img_content)
+    requests_mock.get(SCRIPT_URL, content=script_content)
+    requests_mock.get(LINK_URL, content=link_content)
     assert read_file(download(URL, tmpdir)) == read_file(FILE_DOWNLOAD)
 
 

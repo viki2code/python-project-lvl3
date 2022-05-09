@@ -41,10 +41,17 @@ def get_request(url):
     return r
 
 
+def get_content_length(request):
+    if request.headers.get('Content-Length') is not None:
+        return int(request.headers.get('Content-Length'))
+    else:
+        return len(request.content)
+
+
 def write_content(url, path, file_name):
     chunk_size = 1024
     r = get_request(url)
-    content_length = int(r.headers['Content-Length'])
+    content_length = get_content_length(r)
     bar = IncrementalBar(f'{file_name}',
                          max=content_length,
                          suffix='%(percent)d%%')
