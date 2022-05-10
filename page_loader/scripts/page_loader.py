@@ -11,7 +11,7 @@ def main():
     parser = argparse.ArgumentParser('Page loader')
     parser.add_argument('url', type=str)
     parser.add_argument(
-        '--output', default=os.getcwd(),
+        '-o', '--output', default=os.getcwd(),
         help=f'output dir (default: "{os.getcwd()}")'
     )
     args = parser.parse_args()
