@@ -1,28 +1,11 @@
-import os
-
 import requests
-from progress.bar import IncrementalBar
+from bs4 import BeautifulSoup
 
 from page_loader.app_logger import get_logger
 
+TAG = ['img', 'script', 'link']
 logger = get_logger(__name__)
-
-
-def write_file(file, data):
-    mode = 'wb' if isinstance(data, bytes) else 'w'
-
-    try:
-        with open(file, mode) as opened_file:
-            opened_file.write(data)
-    except PermissionError as permission:
-        logger.error(f'Access denied to file {file}')
-        raise permission
-    except FileNotFoundError as nfound:
-        logger.error(f'File not found: {file}')
-        raise nfound
-    except OSError as err:
-        logger.error(f'Unable to write to file {file}')
-        raise err
+CHUNK_SIZE = 1024
 
 
 def get_request(url):
@@ -41,6 +24,12 @@ def get_request(url):
     return r
 
 
+def parse(url):
+    soup = BeautifulSoup(get_request(url).content, 'html.parser')
+    all_tags = soup.find_all(TAG)
+    return all_tags, soup
+
+
 def get_content_length(request):
     if request.headers.get('Content-Length') is not None:
         return int(request.headers.get('Content-Length'))
@@ -48,26 +37,25 @@ def get_content_length(request):
         return len(request.content)
 
 
-def write_content(url, path, file_name):
-    chunk_size = 1024
-    r = get_request(url)
-    content_length = get_content_length(r)
-    bar = IncrementalBar(f'{file_name}',
-                         max=content_length,
-                         suffix='%(percent)d%%')
+def get_attribute(element):
+    if element.get('src') is not None:
+        return 'src'
+    elif element.get('href'):
+        return 'href'
+    else:
+        return None
 
+
+def save_content(file_path, data, iter_param=None, mode='w'):
     try:
-        with open(os.path.join(path, file_name), 'wb') as opened_file:
-            for chunk in r.iter_content(chunk_size=chunk_size):
+        with open(file_path, mode) as opened_file:
+            for chunk in data:
                 opened_file.write(chunk)
-                bar.next(chunk_size)
-            bar.finish()
+                if iter_param is not None:
+                    iter_param.next(CHUNK_SIZE)
     except PermissionError as permission:
-        logger.error(f'Access denied to file {file_name}')
+        logger.error(f'Access denied to file {file_path}')
         raise permission
-    except FileNotFoundError as nfound:
-        logger.error(f'File not found: {file_name}')
-        raise nfound
     except OSError as err:
-        logger.error(f'Unable to write to file {file_name}')
+        logger.error(f'Unable to write to file {file_path}')
         raise err

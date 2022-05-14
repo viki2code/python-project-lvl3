@@ -13,9 +13,8 @@ def get_file_name(url):
     return result
 
 
-def get_folder(file_name):
-    folder_name = os.path.splitext(file_name)[0] + '_files'
-    return folder_name
+def get_dir_name(file_name):
+    return os.path.splitext(file_name)[0] + '_files'
 
 
 def get_main_page_url(url):
@@ -35,7 +34,3 @@ def get_host(url):
 
 def is_same_host(resource_host, url):
     return resource_host == get_host(url) or get_host(url) == ''
-
-
-def is_web_site(file_name):
-    return True if os.path.splitext(file_name)[1] == '.html' else False
