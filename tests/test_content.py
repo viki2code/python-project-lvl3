@@ -23,6 +23,7 @@ def get_path(file_name, folder_name):
 FILE_SITE = get_path('web_site.html', MOCK_FOLDER)
 FILE_IMG = get_path('nodejs.png', MOCK_FOLDER)
 
+
 @pytest.mark.parametrize('code', STATUS_CODE)
 def test_response_error_code(requests_mock, code, tmp_path):
     requests_mock.get(URL, status_code=code)

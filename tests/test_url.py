@@ -19,6 +19,7 @@ LINK_FILE_NAME = 'ru-hexlet-io-assets-application.css'
 HOST = 'ru.hexlet.io'
 MAIN_PAGE = 'https://ru.hexlet.io'
 
+
 @pytest.mark.parametrize('url, file_name', [(URL, URL_FILE_NAME),
                                             (IMG_URL, IMG_FILE_NAME),
                                             (SCRIPT_URL, SCRIPT_FILE_NAME),
