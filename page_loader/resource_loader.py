@@ -49,8 +49,8 @@ def download_resource(folder_path, data_to_load):
                              suffix='%(percent)d%%')
         save_content(os.path.join(folder_path, element['file_name']),
                      r.iter_content(chunk_size=CHUNK_SIZE),
-                     iter_param=bar,
-                     mode='wb')
+                     mode='wb',
+                     iter_param=bar)
         logger.debug(f'Loaded page {element["absolute_url"]} into '
                      f'{element["file_name"]}')
         bar.finish()
