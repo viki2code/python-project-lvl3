@@ -29,15 +29,6 @@ def get_content_length(request):
         return len(request.content)
 
 
-def get_attribute(element):
-    if element.get('src') is not None:
-        return 'src'
-    elif element.get('href'):
-        return 'href'
-    else:
-        return None
-
-
 def save_content(file_path, data, mode='w'):
     try:
         with open(file_path, mode) as opened_file:
